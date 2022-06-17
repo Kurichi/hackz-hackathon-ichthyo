@@ -2,3 +2,5 @@ frontend/Intermediate
 frontend/frontend/App/*.exe
 .vs
 frontend/.vs
+.user
+.editorconfig
