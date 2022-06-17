@@ -1,4 +1,4 @@
 frontend/Intermediate
-frontend/frontend/App
+frontend/frontend/App/*.exe
 .vs
 frontend/.vs
