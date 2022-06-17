@@ -4,3 +4,6 @@ frontend/frontend/App/*.exe
 frontend/.vs
 *.user
 .editorconfig
+
+backend/Server
+backend/*.o
