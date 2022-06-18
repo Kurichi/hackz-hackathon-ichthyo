@@ -17,6 +17,8 @@ class Server {
   boost::asio::ip::udp::socket sock;
   std::set<boost::asio::ip::udp::endpoint> clientList;
 
+  bool isLoop = true;
+
  public:
   Server();
 
@@ -24,6 +26,7 @@ class Server {
   void receive();
   void broadcast(const boost::asio::ip::udp::endpoint &endpoint,
                  const std::string &str);
+  void command();
 };
 
 #endif  // _SERVER_H_
