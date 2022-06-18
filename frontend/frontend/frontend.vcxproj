@@ -316,6 +316,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\UI\RoomBanner.h" />
+    <ClInclude Include="src\UI\RoomlistScene.h" />
+    <ClInclude Include="src\UI\RoomScene.h" />
+    <ClInclude Include="src\UI\Scene.h" />
     <ClInclude Include="src\UI\stdafx.h" />
     <ClInclude Include="stdafx.h" />
   </ItemGroup>
