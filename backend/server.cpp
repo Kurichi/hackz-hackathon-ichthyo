@@ -9,10 +9,11 @@ Server::Server()
            boost::asio::ip::udp::endpoint(boost::asio::ip::udp::v4(), PORT)) {}
 
 void Server::start() {
-  std::thread thd_receive(&Server::receive, this);
-  std::thread thd_command(&Server::command, this);
-  thd_receive.join();
-  thd_command.join();
+	receive();
+//  std::thread thd_receive(&Server::receive, this);
+ // std::thread thd_command(&Server::command, this);
+ // thd_receive.join();
+ // thd_command.join();
 }
 
 void Server::receive() {
@@ -38,13 +39,13 @@ void Server::receive() {
 // endpoint を除く client 全員に送信
 void Server::broadcast(const boost::asio::ip::udp::endpoint &endpoint,
                        const std::string &str) {
-  auto buf = boost::asio::buffer(str);
   for (const auto &client : clientList) {
     // 送ってきた人とclientが同一なら読み飛ばす
-    if (endpoint == client) continue;
+    //if (endpoint == client) continue;
 
     sock.send_to(
-        buf, boost::asio::ip::udp::endpoint(client.address(), client.port()));
+	boost::asio::buffer(str),
+        boost::asio::ip::udp::endpoint(client.address(), client.port()));
   }
 }
 
