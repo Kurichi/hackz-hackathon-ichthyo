@@ -16,11 +16,11 @@ void Main()
 	//UserVoiceRecorder recorder(udp::endpoint(ip::address::from_string("127.0.0.1"), 23236));
 	//SingletonSocket::SetMyEndpoint(udp::endpoint(udp::v4(), 32153));
 	//SingletonSocket::Get()->connect(udp::endpoint(ip::address::from_string("127.0.0.1"), 23236));
+	UsersVoicePlayer player(
+		udp::endpoint(boost::asio::ip::address::from_string("219.94.241.220"), 1234
+	));
 
 	std::thread playThread([&] {
-		UsersVoicePlayer player(
-			udp::endpoint(boost::asio::ip::address::from_string("219.94.241.220"), 1234
-		));
 		player.ReceiveAndPlayLoop();
 		});
 		
