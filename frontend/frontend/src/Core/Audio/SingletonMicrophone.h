@@ -16,6 +16,7 @@ public:
 		}
 		return microphone;
 	}
-
 };
+
+std::shared_ptr<Microphone> SingletonMicrophone::microphone{ nullptr };
 
