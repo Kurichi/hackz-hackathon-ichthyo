@@ -1,7 +1,7 @@
 ﻿#include <Siv3D.hpp> // OpenSiv3D v0.6.3
-#include "Scene.h"
-#include "RoomlistScene.h"
-#include "RoomScene.h"
+#include "Scene.h"// シーン管理等
+//#include "RoomlistScene.h"// 部屋一覧シーン
+#include "RoomScene.h"// 部屋シーン(ここで通話する)
 
 void Main()
 {
@@ -9,22 +9,23 @@ void Main()
 	FontAsset::Register(U"Title", 120, Typeface::Bold);
 
 
+
 	// シーンサイズの変更
-	Scene::Resize(800, 800);
+	//Scene::Resize(800, 800);
 	// 全画面にしない
 	if (false) Window::SetFullscreen(true);
 	// 手動リサイズを許可する
 	else Window::SetStyle(WindowStyle::Sizable);
 
 	// 背景の色を設定 | Set background color
-	Scene::SetBackground(ColorF{ 1.0, 1.0, 1.0 });
+	Scene::SetBackground(ColorF{ 0.8, 1.0, 1.0 });
 
 	// シーンと遷移時の色を設定
 	MyApp manager;
 	manager
-		.add<Roomlist>(State::Roomlist)
+		//.add<Roomlist>(State::Roomlist)
 		.add<Room>(State::Room)
-		.setFadeColor(ColorF{ 0.0, 0.0, 0.0 });
+		.setFadeColor(ColorF{ 0.8, 1.0, 1.0 });
 
 	while (System::Update())
 	{

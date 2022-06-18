@@ -16,7 +16,7 @@ public:
 
 	Roomlist(const InitData& init) : IScene(init) {
 		// ここで部屋のリストを読み込む
-		roombanners << RoomBanner(U"名無しの部屋", 1);
+		roombanners << RoomBanner(U"名無しの部屋", 1, Scene::Width()*0.8, 0);
 	}
 
 	void update() override
