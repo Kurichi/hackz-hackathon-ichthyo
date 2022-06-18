@@ -26,7 +26,7 @@ bool JudgeVoice::Judge(Microphone& mic) {
 	if ((judgetype & PITCH) != 0)
 		pitch = JudgeforPitch(fft);
 
-	bool ret = aveamp & pitch;
+	bool ret = aveamp && pitch;
 
 	return ret;
 }
