@@ -5,6 +5,7 @@
 #include <boost/asio.hpp>
 #include <unordered_map>
 #include "Core/Connection/UDPReceiver.h"
+#include "Core/Util.h"
 
 class UsersVoicePlayer{
 private:

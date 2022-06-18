@@ -12,13 +12,23 @@ UserVoiceRecorder::UserVoiceRecorder(const udp::endpoint& serverEndpoint) :
 	recorder(1s, Loop::Yes, StartImmediately::Yes),
 	serverEndpoint(serverEndpoint),
 	socket(SingletonSocket::Get())
-{}
+{
+	this->recorder.SetMicrophoneRecordDuration(1s);
+}
 
 void UserVoiceRecorder::SendAudioData(const User& myUser ) {
-	static auto sendAudioThreadPtr = std::make_unique<std::thread>();
-	if (this->previousSendedTime + this->recorder.GetMicrophoneRecordDuration().count() > Scene::Time()) return;
+	static std::unique_ptr<std::thread> sendAudioThreadPtr = nullptr;
+	if (this->previousSendedTime + 1 > Scene::Time()) {
+		double hoge = Scene::Time();
+
+		return;
+	}
+	previousSendedTime = Scene::Time();
 	Wave wave = recorder.GetRecentWave();
-	if (sendAudioThreadPtr != nullptr) sendAudioThreadPtr->join();
+	if (sendAudioThreadPtr != nullptr)
+	{
+		sendAudioThreadPtr->join();
+	}
 
 	sendAudioThreadPtr.reset(new std::thread([wave, myUser, this] {
 		const std::string audioPath = (this->tmpAudioFileDirectory / "hoge.ogg").string();
@@ -33,7 +43,8 @@ void UserVoiceRecorder::SendAudioData(const User& myUser ) {
 
 		data += tmp;
 
-		this->socket->send_to(boost::asio::buffer(data), this->serverEndpoint);
+		this->socket->send(boost::asio::buffer("name\nid\n0\n1\n" + tmp));
+
 		}));
 }
 

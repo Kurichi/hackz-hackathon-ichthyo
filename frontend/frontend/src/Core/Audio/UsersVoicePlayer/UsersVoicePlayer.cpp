@@ -3,6 +3,7 @@
 #include "Core/Connection/UDPReceiver.h"
 #include "Core/Util.h"
 
+
 UsersVoicePlayer::UsersVoicePlayer(
 	boost::asio::ip::udp::endpoint serverEndpoint
 ) :
