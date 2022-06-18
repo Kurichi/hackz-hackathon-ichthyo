@@ -19,7 +19,7 @@ UserVoiceRecorder::UserVoiceRecorder(const udp::endpoint& serverEndpoint, const 
 		while (true) {
 			if (!this->VoiceQueue.empty()) {
 				boost::asio::io_service io_service;
-				Wave wave = recorder.GetRecentWave();
+				Wave wave = VoiceQueue.front();
 				this->VoiceQueue.pop();
 				const std::string audioPath = (this->tmpAudioFileDirectory / "hoge.ogg").string();
 				if (!wave.save(Unicode::Widen(audioPath))) {
@@ -48,5 +48,7 @@ void UserVoiceRecorder::SendAudioData() {
 		return;
 	}
 	previousSendedTime = 0;
-	VoiceQueue.push(0);
+	Wave wave = recorder.GetRecentWave();
+	VoiceQueue.push(wave);
+
 }
