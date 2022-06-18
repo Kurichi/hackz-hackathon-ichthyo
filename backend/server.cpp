@@ -8,12 +8,7 @@ Server::Server()
     : sock(io_service,
            boost::asio::ip::udp::endpoint(boost::asio::ip::udp::v4(), PORT)) {}
 
-void Server::start() {
-  std::thread thd_receive(&Server::receive, this);
-  std::thread thd_command(&Server::command, this);
-  thd_receive.join();
-  thd_command.join();
-}
+void Server::start() { receive(); }
 
 void Server::receive() {
   while (isLoop) {
@@ -23,7 +18,8 @@ void Server::receive() {
     boost::asio::ip::udp::endpoint endpoint;
     size_t len = sock.receive_from(boost::asio::buffer(recv_buf), endpoint);
 
-    std::cout << "receive" << std::endl;
+    std::cout << "[receive] " << endpoint.address() << ":" << endpoint.port()
+              << std::endl;
 
     std::stringstream ss;
     ss.write(recv_buf.data(), len);
@@ -38,23 +34,23 @@ void Server::receive() {
 // endpoint を除く client 全員に送信
 void Server::broadcast(const boost::asio::ip::udp::endpoint &endpoint,
                        const std::string &str) {
-  auto buf = boost::asio::buffer(str);
   for (const auto &client : clientList) {
     // 送ってきた人とclientが同一なら読み飛ばす
     if (endpoint == client) continue;
 
     sock.send_to(
-        buf, boost::asio::ip::udp::endpoint(client.address(), client.port()));
+        boost::asio::buffer(str),
+        boost::asio::ip::udp::endpoint(client.address(), client.port()));
   }
 }
 
-void Server::command() {
-  while (isLoop) {
-    std::string str;
-    std::cin >> str;
+/* void Server::command() { */
+/*   while (isLoop) { */
+/*     std::string str; */
+/*     std::cin >> str; */
 
-    if (str == "/close" || str == "/quit") {
-      isLoop = false;
-    }
-  }
-}
+/*     if (str == "/close" || str == "/quit") { */
+/*       isLoop = false; */
+/*     } */
+/*   } */
+/* } */
