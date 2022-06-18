@@ -14,7 +14,8 @@ private:
 	double previousSendedTime;
 	boost::asio::ip::udp::endpoint serverEndpoint;
 	std::shared_ptr<boost::asio::ip::udp::socket> socket;
-	
+	boost::asio::io_service ios;
+	boost::asio::ip::udp::socket sock;
 public:
 	UserVoiceRecorder(const boost::asio::ip::udp::endpoint& serverEndpoint);
 	void SendAudioData(const User& myUser);
