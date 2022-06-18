@@ -33,9 +33,10 @@ public:
 		this->boolean = boolean;
 		tss.update(circle.mouseOver());
 		if(circle.mouseOver())Cursor::RequestStyle(CursorStyle::Hand);
+	}
 
-		// クリック時の動作
-		//if (circle.leftClicked()) boolean = !(boolean);
+	bool leftClicked() {
+		return circle.leftClicked();
 	}
 
 	// 描画

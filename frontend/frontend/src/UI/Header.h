@@ -38,7 +38,7 @@ public:
 		// アイコンの設定
 		microphone.update(sIn);
 		headphone.update(sOut);
-	}
+	} 
 
 	// 描画
 	void draw() const
