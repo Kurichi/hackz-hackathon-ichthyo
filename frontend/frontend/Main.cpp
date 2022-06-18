@@ -51,7 +51,7 @@ void Main()
 	FontAsset::Register(U"Title", 120, Typeface::Bold);
 
 	SingletonSocket::SetMyEndpoint(udp::endpoint(udp::v4(), 32153));
-	UserVoiceRecorder recorder(udp::endpoint(address::from_string("219.94.241.220"), 1234));
+	UserVoiceRecorder recorder(udp::endpoint(address::from_string("219.94.241.220"), 1234), {"name", "1f1b33"});
 
 	//UserVoiceRecorder recorder(udp::endpoint(ip::address::from_string("127.0.0.1"), 23236));
 	//SingletonSocket::SetMyEndpoint(udp::endpoint(udp::v4(), 32153));
@@ -85,7 +85,7 @@ void Main()
 
 	while (System::Update())
 	{
-		recorder.SendAudioData({ "name", "1edfa37547" });
+		recorder.SendAudioData();
 		if (!manager.update())
 		{
 			break;
