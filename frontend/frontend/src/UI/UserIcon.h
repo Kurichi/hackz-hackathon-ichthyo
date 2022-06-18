@@ -29,6 +29,7 @@ public:
 	// volumeの更新
 	void update(const double& volume, const Point& center)
 	{
+		this->volume = volume;
 		this->center = center;
 		circle = Circle(0, 0, radius).movedBy(center);
 	}
@@ -40,5 +41,6 @@ public:
 		// テクスチャの (85, 0) から幅 120 高さ 120 の領域を、circle に貼り付けて描画
 		circle(img(85, 0, 120, 120)).draw();
 		font(name).draw(Arg::center = center.movedBy(0, radius + 30), Palette::Black);
+		circle.stretched(5).drawArc(0, Math::Pi * 2 * volume, 0, 5, ColorF(1.0, 0.0, 0.0, Min(volume, 1.0)));
 	}
 };
