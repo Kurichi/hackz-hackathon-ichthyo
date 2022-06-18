@@ -1,4 +1,5 @@
 ﻿#pragma once
+#define BOOST_UUID_RANDOM_PROVIDER_FORCE_WINCRYPT
 #include <string>
 #include <boost/uuid/uuid.hpp>
 #include <boost/uuid/uuid_io.hpp>
