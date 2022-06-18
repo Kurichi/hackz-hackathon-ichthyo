@@ -22,7 +22,7 @@ public:
 
   void start();
   void receive();
-  void broadcast(boost::asio::ip::udp::endpoint endpoint, boost::array<char, MAX_BUF_SIZE> recv_buf);
+  void broadcast(boost::asio::ip::udp::endpoint endpoint, const std::string & str);
 };
 
 #endif // _SERVER_H_
