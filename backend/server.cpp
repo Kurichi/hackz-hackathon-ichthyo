@@ -36,7 +36,7 @@ void Server::broadcast(const boost::asio::ip::udp::endpoint &endpoint,
                        const std::string &str) {
   for (const auto &client : clientList) {
     // 送ってきた人とclientが同一なら読み飛ばす
-    if (endpoint == client) continue;
+    // if (endpoint == client) continue;
 
     sock.send_to(
         boost::asio::buffer(str),
