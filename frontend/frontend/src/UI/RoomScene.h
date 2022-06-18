@@ -59,6 +59,10 @@ public:
 				)
 			);
 		}
+
+		// sIn, sOutの更新
+		if (header.update_sIn()) getData().sIn ^= 1;
+		if (header.update_sOut()) getData().sOut ^= 1;
 	}
 
 	void draw() const override
