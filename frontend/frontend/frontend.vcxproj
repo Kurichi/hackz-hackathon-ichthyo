@@ -323,7 +323,17 @@
   <ItemGroup>
     <ClInclude Include="src\Core\Audio\Recorder.h" />
     <ClInclude Include="src\Core\Connection\SingletonSocket.h" />
+    <ClInclude Include="src\Core\JudgeVoice.hpp" />
     <ClInclude Include="src\Core\Util.h" />
+    <ClInclude Include="src\UI\Header.h" />
+    <ClInclude Include="src\UI\JoinButton.h" />
+    <ClInclude Include="src\UI\RoomBanner.h" />
+    <ClInclude Include="src\UI\RoomlistScene.h" />
+    <ClInclude Include="src\UI\RoomScene.h" />
+    <ClInclude Include="src\UI\Scene.h" />
+    <ClInclude Include="src\UI\ToggleButton.h" />
+    <ClInclude Include="src\UI\UserData.h" />
+    <ClInclude Include="src\UI\UserIcon.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="src\Core\Audio\UsersVoicePlayer.h" />
     <ClInclude Include="src\Core\Connection\UDPReceiver.h" />
