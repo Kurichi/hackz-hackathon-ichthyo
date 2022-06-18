@@ -3,6 +3,7 @@
 #include "Core/Connection/SingletonSocket.h"
 #include "Core/Audio/UserVoiceRecorder.h"
 #include "Core/User.h"
+#include "Core/Audio/SingletonMicrophone.h"
 
 using namespace boost::asio::ip;
 using namespace boost::asio;
@@ -47,6 +48,9 @@ using namespace boost::asio;
 
 void Main()
 {
+
+	SingletonMicrophone::Set(1s, Loop::Yes, StartImmediately::Yes);
+	
 	// 使用するフォントアセットを登録
 	FontAsset::Register(U"Title", 120, Typeface::Bold);
 
