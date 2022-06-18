@@ -3,9 +3,6 @@
 
 class RoomBanner {
 private:
-	//
-public:
-
 	int32 margin = 8;
 	int32 width = 400;
 	int32 height = 150;
@@ -13,6 +10,7 @@ public:
 	int32 members;
 	Rect rect;
 	Transition tss = Transition(0.2s, 0.3s);
+public:
 
 	RoomBanner(const String& name, const int32 members)
 		: name(name), members(members)

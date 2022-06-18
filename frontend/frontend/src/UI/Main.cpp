@@ -29,11 +29,13 @@ private:
 public:
 
 	Roomlist(const InitData& init) : IScene(init) {
+		// ここで部屋のリストを読み込む
 		roombanners << RoomBanner(U"名無しの部屋", 1);
 	}
 
 	void update() override
 	{
+		// 部屋のリストに関する更新
 		for (auto i : step(roombanners.size())) {
 			RoomBanner rb = roombanners[i];
 			rb.update();
@@ -68,7 +70,9 @@ public:
 
 	void draw() const override
 	{
+		// 部屋のリストに関する描画
 		for (auto i : step(roombanners.size()))roombanners[i].draw(origin, i);
+
 		/*
 		const String titleText = U"Maze";
 		//FontAsset(U"Title")(titleText).drawAt(Scene::Center().movedBy(0, -200), ColorF(0.0, 0.5, 0.8));
@@ -83,7 +87,7 @@ public:
 	}
 };
 
-// 部屋シーン
+// 部屋シーン(ここで通話する)
 class Room : public MyApp::Scene
 {
 private:
