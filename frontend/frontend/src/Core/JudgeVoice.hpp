@@ -4,7 +4,7 @@
 
 //JudgeVoice::judgetype 判断基準の定義
 #define AVE_AMP 0x1     //振幅の平均
-#define PITCH 0x2
+#define PITCH 0x2       //ピッチ（音程、音高）
 
 class JudgeVoice {
 public:
