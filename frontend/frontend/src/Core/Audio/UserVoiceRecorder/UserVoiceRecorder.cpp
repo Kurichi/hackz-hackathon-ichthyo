@@ -9,7 +9,7 @@ using namespace boost::asio::ip;
 UserVoiceRecorder::UserVoiceRecorder(const udp::endpoint& serverEndpoint) :
 	tmpAudioFileDirectory("tmpAudio"),
 	previousSendedTime(0),
-	recorder(1s, Loop::Yes, StartImmediately::Yes),
+	recorder(),
 	serverEndpoint(serverEndpoint),
 	socket(SingletonSocket::Get()),
 	sock(ios, udp::endpoint(address::from_string("127.0.0.1"), 32153))
