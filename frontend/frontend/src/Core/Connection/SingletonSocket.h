@@ -7,6 +7,7 @@ private:
 	static boost::asio::io_service io_service;
 	static std::shared_ptr<boost::asio::ip::udp::socket> socket;
 	static boost::asio::ip::udp::endpoint endpoint;
+	SingletonSocket() {}
 public:
 	static void SetMyEndpoint(const boost::asio::ip::udp::endpoint& ep) {
 		SingletonSocket::endpoint = ep;
