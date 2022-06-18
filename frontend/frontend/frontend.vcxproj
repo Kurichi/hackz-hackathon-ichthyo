@@ -116,6 +116,7 @@
   <ItemGroup>
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="src\Core\Audio\Recorder\Recorder.cpp" />
+    <ClCompile Include="src\Core\Audio\SingletonMicrophone\SingletonMicrophone.cpp" />
     <ClCompile Include="src\Core\Connection\SingletonSocket\SingletonSocket.cpp" />
     <ClCompile Include="src\Core\Util\Util.cpp" />
     <ClCompile Include="stdafx.cpp">
