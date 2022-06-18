@@ -1,4 +1,4 @@
-##include "JudgeVoice.hpp"
+#include "Core/JudgeVoice.hpp"
 #include <Siv3D.hpp>
 
 JudgeVoice::JudgeVoice(int type_) {
