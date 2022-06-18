@@ -1,4 +1,4 @@
-#include "Core/JudgeVoice.hpp"
+#include "JudgeVoice.hpp"
 #include <Siv3D.hpp>
 
 JudgeVoice::JudgeVoice(int type_) {
@@ -19,23 +19,22 @@ bool JudgeVoice::Judge(Microphone& mic) {
 	mic.fft(fft);
 
 	bool aveamp = true;
+	bool laveamp = true;
 	bool pitch = true;
+	bool lpitch = true;
 
 	if ((judgetype & AVE_AMP) != 0)
 		aveamp = JudgeforAveAmp(fft);
 	if ((judgetype & PITCH) != 0)
 		pitch = JudgeforPitch(fft);
+	if ((judgetype & L_PITCH) != 0)
+		lpitch = JudgeforLPitch(fft);
+	if ((judgetype & L_AVE_AMP) != 0)
+		laveamp = JudgeforLAveAmp(fft);
 
-	bool ret = aveamp && pitch;
+	bool ret = aveamp & pitch & lpitch & laveamp;
 
 	return ret;
-}
-
-bool JudgeVoice::JudgeforAveAmp(FFTResult fft) {
-	double ave = GetAveAmp(fft);
-
-	if (ave >= amp_thre) return true;
-	else return false;
 }
 
 double JudgeVoice::GetAveAmp(FFTResult fft) {
@@ -70,4 +69,22 @@ bool JudgeVoice::JudgeforPitch(FFTResult fft) {
 
 	if (GetPitch(fft) > pitch_thre) return true;
 	return false;
+}
+
+bool JudgeVoice::JudgeforAveAmp(FFTResult fft) {
+	double ave = GetAveAmp(fft);
+
+	if (ave > amp_thre) return true;
+	else return false;
+}
+
+bool JudgeVoice::JudgeforLPitch(FFTResult fft) {
+
+	if (GetPitch(fft) < pitch_thre) return true;
+	return false;
+}
+
+bool JudgeVoice::JudgeforLAveAmp(FFTResult fft) {
+	if (GetAveAmp(fft) < amp_thre) return true;
+	else return false;
 }
