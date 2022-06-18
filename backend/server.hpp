@@ -19,14 +19,19 @@ class Server {
 
   bool isLoop = true;
 
+  bool isDebug = false;
+  bool isReturn = false;
+
  public:
   Server();
+  Server(const std::vector<std::string> &args);
 
   void start();
   void receive();
-  void broadcast(const boost::asio::ip::udp::endpoint &endpoint,
-                 const std::string &str);
+  void broadcast(const boost::asio::ip::udp::endpoint endpoint,
+                 const std::string str);
   void command();
+  void debug(std::string message);
 };
 
 #endif  // _SERVER_H_
