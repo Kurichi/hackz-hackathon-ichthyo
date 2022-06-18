@@ -322,6 +322,7 @@
     <ClInclude Include="src\UI\RoomScene.h" />
     <ClInclude Include="src\UI\Scene.h" />
     <ClInclude Include="src\UI\stdafx.h" />
+    <ClInclude Include="src\UI\ToggleButton.h" />
     <ClInclude Include="src\UI\UserIcon.h" />
     <ClInclude Include="stdafx.h" />
   </ItemGroup>
