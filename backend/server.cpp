@@ -11,6 +11,8 @@ Server::Server()
 void Server::start() {
   std::thread thd_receive(&Server::receive, this);
   std::thread thd_command(&Server::command, this);
+  thd_receive.join();
+  thd_command.join();
 }
 
 void Server::receive() {
