@@ -42,13 +42,13 @@ void Server::receive() {
     size_t len = sock.receive_from(boost::asio::buffer(recv_buf), endpoint);
     clientList.insert(endpoint);
 
-    debug((boost::format("[receive] %1% : %2%") % endpoint.address() %
-           endpoint.port())
+    debug((boost::format("[receive] %1% : %2% Size: %3%") % endpoint.address() %
+           endpoint.port() % len)
               .str());
 
     std::stringstream ss;
     ss.write(recv_buf.data(), len);
-    /* std::thread thd(&Server::broadcast, this, endpoint, ss.str()); */
+
     broadcast(endpoint, ss.str());
   }
   sock.close();
