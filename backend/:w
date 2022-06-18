@@ -27,14 +27,14 @@ void Server::receive() {
 }
 
 // endpoint を除く client 全員に送信
-void Server::broadcast(const boost::asio::ip::udp::endpoint &endpoint,
-                       const std::string &str) {
-  auto buf = boost::asio::buffer(str);
+void Server::broadcast(boost::asio::ip::udp::endpoint endpoint,
+                       boost::array<char, BUF_SIZE> recv_buf) {
   for (const auto &client : clientList) {
     // 送ってきた人とclientが同一なら読み飛ばす
     if (endpoint == client) continue;
 
     sock.send_to(
-        buf, boost::asio::ip::udp::endpoint(client.address(), client.port()));
+        boost::asio::buffer(recv_buf),
+        boost::asio::ip::udp::endpoint(client.address(), client.port()));
   }
 }
