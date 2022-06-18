@@ -16,8 +16,11 @@ private:
 	std::shared_ptr<boost::asio::ip::udp::socket> socket;
 	boost::asio::io_service ios;
 	boost::asio::ip::udp::socket sock;
+	std::queue<Wave> VoiceQueue;
+	std::unique_ptr<std::thread> SendVoice;
+	const User& myUser;
 public:
-	UserVoiceRecorder(const boost::asio::ip::udp::endpoint& serverEndpoint);
-	void SendAudioData(const User& myUser);
+	UserVoiceRecorder(const boost::asio::ip::udp::endpoint& serverEndpoint, const User& myUser);
+	void SendAudioData();
 };
 
