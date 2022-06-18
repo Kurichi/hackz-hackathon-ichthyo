@@ -7,7 +7,7 @@
 #include <set>
 
 // using namespace boost::asio::ip;
-constexpr int MAX_BUF_SIZE = 1024;
+constexpr int MAX_BUF_SIZE = 60000;
 constexpr int PORT = 1234;
 
 class Server
