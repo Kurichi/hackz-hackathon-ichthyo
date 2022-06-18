@@ -52,7 +52,7 @@ public:
 		// ユーザアイコンの位置指定
 		for (auto i : step(usericons.size())) {
 			usericons[i].update(
-				Random(),
+				1.0 * i / (usericons.size() - 1),
 				Scene::Center().movedBy(
 					UserIcon::width * (i % w - w / 2.0 + 0.5),
 					UserIcon::height * (i / w) - scrollY - 100

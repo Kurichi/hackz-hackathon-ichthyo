@@ -26,6 +26,7 @@ struct Data
 		U"example/siv3d-kun.png",
 		U"example/siv3d-kun.png",
 		U"example/siv3d-kun.png",
+		U"example/siv3d-kun.png",
 		U"example/siv3d-kun.png"
 	};
 	Array<String> namelist = {
@@ -40,6 +41,7 @@ struct Data
 		U"名無し8",
 		U"名無し9",
 		U"名無しA",
+		U"名無しB"
 	};
 	bool sIn = true;
 	bool sOut = true;

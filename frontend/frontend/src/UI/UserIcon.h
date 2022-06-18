@@ -41,6 +41,9 @@ public:
 		// テクスチャの (85, 0) から幅 120 高さ 120 の領域を、circle に貼り付けて描画
 		circle(img(85, 0, 120, 120)).draw();
 		font(name).draw(Arg::center = center.movedBy(0, radius + 30), Palette::Black);
-		circle.stretched(5).drawArc(0, Math::Pi * 2 * volume, 0, 5, ColorF(1.0, 0.0, 0.0, Min(volume, 1.0)));
+		circle.stretched(5).drawArc(0, Math::Pi * 2 * volume, 0, 10, ColorF(1.0, 1.0 - volume, 1.0 - volume));
+		if (volume < 1.0) {
+			circle.draw(ColorF(0.0, 0.7));
+		}
 	}
 };
