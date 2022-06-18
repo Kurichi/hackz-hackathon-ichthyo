@@ -31,7 +31,7 @@ void UsersVoicePlayer::ReceiveAndPlayLoop() {
 		}
 		if (!this->audioUUIDMap.at(recvData.user.uuid)) continue;
 		this->audioUUIDMap.at(recvData.user.uuid).setVolume(1);
-		this->audioUUIDMap.at(recvData.user.uuid).play();
+		this->audioUUIDMap.at(recvData.user.uuid).playOneShot();
 	}
 }
 
