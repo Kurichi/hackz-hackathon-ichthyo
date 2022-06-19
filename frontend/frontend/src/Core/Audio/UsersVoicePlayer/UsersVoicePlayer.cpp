@@ -3,6 +3,9 @@
 #include "Core/Connection/UDPReceiver.h"
 #include "Core/Util.h"
 
+//src/UI/roomscene.h
+extern bool spe_mute;
+
 
 UsersVoicePlayer::UsersVoicePlayer(
 	boost::asio::ip::udp::endpoint serverEndpoint
@@ -36,7 +39,7 @@ void UsersVoicePlayer::ReceiveAndPlayLoop() {
 		}
 		if (!this->audioUUIDMap.at(recvData.user.uuid)) continue;
 		this->audioUUIDMap.at(recvData.user.uuid).setVolume(1);
-		this->audioUUIDMap.at(recvData.user.uuid).playOneShot();
+		if(spe_mute) this->audioUUIDMap.at(recvData.user.uuid).playOneShot();
 	}
 }
 

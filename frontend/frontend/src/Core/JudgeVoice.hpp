@@ -13,7 +13,7 @@ public:
 	JudgeVoice(int type_ = AVE_AMP);
 	void SetThre(int type_, double thre_);
 	void SetType(int type_);
-	bool Judge(std::shared_ptr<Microphone> mic);
+	bool Judge(Microphone mic);
 	double GetAveAmp(FFTResult fft);
 	double GetPitch(FFTResult fft);
 	double GetAmpThre() {

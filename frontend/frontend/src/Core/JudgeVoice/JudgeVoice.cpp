@@ -2,9 +2,9 @@
 #include <Siv3D.hpp>
 
 JudgeVoice::JudgeVoice(int type_) {
-	SetType(type_);
 	amp_thre = 0.005;
 	pitch_thre = 1000;
+	SetType(type_);
 }
 
 void JudgeVoice::SetThre(int type_, double thre_) {
@@ -21,9 +21,9 @@ void JudgeVoice::SetType(int type_) {
 
 }
 
-bool JudgeVoice::Judge(std::shared_ptr<Microphone> mic) {
+bool JudgeVoice::Judge(Microphone mic) {
 	FFTResult fft;
-	mic->fft(fft);
+	mic.fft(fft);
 
 	bool aveamp = true;
 	bool pitch = true;
@@ -40,7 +40,7 @@ bool JudgeVoice::Judge(std::shared_ptr<Microphone> mic) {
 		lpitch = !JudgeforPitch(fft);
 
 
-	bool ret = aveamp && pitch;
+	bool ret = aveamp && pitch && laveamp && lpitch;
 
 	return ret;
 }
@@ -49,7 +49,7 @@ double JudgeVoice::GetAveAmp(FFTResult fft) {
 	double ave = 0;
 	int c = 0;
 
-	for (int i = 0; i < 800; i++) {
+	for (auto i : step(800)) {
 		ave += fft.buffer[i];
 		c++;
 	}

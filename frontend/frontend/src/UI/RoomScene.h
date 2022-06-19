@@ -8,6 +8,8 @@
 #include "Core/JudgeVoice.hpp"
 
 extern JudgeVoice jv;
+bool mic_mute = true;
+bool spe_mute = true;
 
 // 部屋シーン(ここで通話する)
 class Room : public MyApp::Scene
@@ -86,9 +88,14 @@ public:
 		//nsm.update()
 
 		// sIn, sOutの更新
-		if (header.update_sIn()) getData().sIn ^= 1;
-		if (header.update_sOut()) getData().sOut ^= 1;
-
+		if (header.update_sIn()) {
+			getData().sIn ^= 1;
+			mic_mute = getData().sIn;
+		}
+		if (header.update_sOut()) {
+			getData().sOut ^= 1;
+			spe_mute = getData().sOut;
+		}
 		// fft更新
 		mic->fft(fft);
 	}

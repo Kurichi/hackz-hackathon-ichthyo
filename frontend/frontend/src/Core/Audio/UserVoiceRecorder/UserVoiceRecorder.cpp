@@ -8,6 +8,9 @@
 
 using namespace boost::asio::ip;
 
+//src/UI/roomscene.h
+extern bool mic_mute;
+//Main.cpp
 extern JudgeVoice jv;
 
 UserVoiceRecorder::UserVoiceRecorder(const udp::endpoint& serverEndpoint, const User &User) :
@@ -27,8 +30,8 @@ UserVoiceRecorder::UserVoiceRecorder(const udp::endpoint& serverEndpoint, const 
 				boost::asio::io_service io_service;
 				Wave wave = VoiceQueue.front();
 				this->VoiceQueue.pop();
-				std::shared_ptr<Microphone> mic = SingletonMicrophone::Get();
-				if (!jv.Judge(mic) || muteFlag) {
+				Microphone mic = *SingletonMicrophone::Get();
+				if (!jv.Judge(mic) || !mic_mute) {
 					continue;
 				}
 
