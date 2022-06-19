@@ -49,7 +49,7 @@ double JudgeVoice::GetAveAmp(FFTResult fft) {
 	double ave = 0;
 	int c = 0;
 
-	for (auto i : step(800)) {
+	for (int i = 0; i < 800; i++) {
 		ave += fft.buffer[i];
 		c++;
 	}
@@ -60,17 +60,26 @@ double JudgeVoice::GetAveAmp(FFTResult fft) {
 }
 
 double JudgeVoice::GetPitch(FFTResult fft) {
-	double max = 0;
-	int max_num = 0;
+	double max1 = 0, max2 = 0, max3 = 0;
+	int max_num1 = 0, max_num2 = 0, max_num3 = 0;
 
-	for (auto i : step(800)) {
-		if (fft.buffer[i] > max) {
-			max = fft.buffer[i];
-			max_num = i;
+	for (int i = 0; i < 800; i++) {
+		if (fft.buffer[i] > max1) {
+			max3 = max2;
+			max2 = max1;
+			max1 = fft.buffer[i];
+
+			max_num3 = max_num2;
+			max_num2 = max_num1;
+			max_num1 = i;
 		}
 	}
 
-	return max_num * fft.resolution;
+	double ret = 0;
+	ret += max1 / (max1 + max2 + max3) * max_num1 * fft.resolution;
+	ret += max2 / (max1 + max2 + max3) * max_num2 * fft.resolution;
+	ret += max3 / (max1 + max2 + max3) * max_num3 * fft.resolution;
+	return ret;
 }
 
 bool JudgeVoice::JudgeforPitch(FFTResult fft) {
