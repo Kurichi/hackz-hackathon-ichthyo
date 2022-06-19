@@ -8,6 +8,8 @@
 
 using namespace boost::asio::ip;
 
+extern JudgeVoice jv;
+
 UserVoiceRecorder::UserVoiceRecorder(const udp::endpoint& serverEndpoint, const User &User) :
 	tmpAudioFileDirectory("tmpAudio"),
 	previousSendedTime(0),
@@ -26,7 +28,7 @@ UserVoiceRecorder::UserVoiceRecorder(const udp::endpoint& serverEndpoint, const 
 				Wave wave = VoiceQueue.front();
 				this->VoiceQueue.pop();
 				std::shared_ptr<Microphone> mic = SingletonMicrophone::Get();
-				if (!judge.Judge(mic) || muteFlag) {
+				if (!jv.Judge(mic) || muteFlag) {
 					continue;
 				}
 
