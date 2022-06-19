@@ -2,7 +2,9 @@
 #include <Siv3D.hpp>
 
 JudgeVoice::JudgeVoice(int type_) {
-	judgetype = type_;
+	SetType(type_);
+	amp_thre = 0.005;
+	pitch_thre = 1000;
 }
 
 void JudgeVoice::SetThre(int type_, double thre_) {
@@ -12,27 +14,33 @@ void JudgeVoice::SetThre(int type_, double thre_) {
 }
 void JudgeVoice::SetType(int type_) {
 	judgetype = type_;
+	if ((type_ & AVE_AMP) != 0) amp_thre = 0.005;
+	if ((type_ & PITCH) != 0) pitch_thre = 1000;
+	if ((type_ & L_AVE_AMP) != 0) amp_thre = 0.002;
+	if ((type_ & L_PITCH) != 0) pitch_thre = 400;
+
 }
 
-bool JudgeVoice::Judge(Microphone& mic) {
+bool JudgeVoice::Judge(std::shared_ptr<Microphone> mic) {
 	FFTResult fft;
-	mic.fft(fft);
+	mic->fft(fft);
 
 	bool aveamp = true;
-	bool laveamp = true;
 	bool pitch = true;
+	bool laveamp = true;
 	bool lpitch = true;
 
 	if ((judgetype & AVE_AMP) != 0)
 		aveamp = JudgeforAveAmp(fft);
 	if ((judgetype & PITCH) != 0)
 		pitch = JudgeforPitch(fft);
-	if ((judgetype & L_PITCH) != 0)
-		lpitch = JudgeforLPitch(fft);
 	if ((judgetype & L_AVE_AMP) != 0)
-		laveamp = JudgeforLAveAmp(fft);
+		laveamp = !JudgeforAveAmp(fft);
+	if ((judgetype & L_PITCH) != 0)
+		lpitch = !JudgeforPitch(fft);
 
-	bool ret = aveamp & pitch & lpitch & laveamp;
+
+	bool ret = aveamp && pitch;
 
 	return ret;
 }
@@ -75,16 +83,5 @@ bool JudgeVoice::JudgeforAveAmp(FFTResult fft) {
 	double ave = GetAveAmp(fft);
 
 	if (ave > amp_thre) return true;
-	else return false;
-}
-
-bool JudgeVoice::JudgeforLPitch(FFTResult fft) {
-
-	if (GetPitch(fft) < pitch_thre) return true;
-	return false;
-}
-
-bool JudgeVoice::JudgeforLAveAmp(FFTResult fft) {
-	if (GetAveAmp(fft) < amp_thre) return true;
 	else return false;
 }

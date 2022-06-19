@@ -1,13 +1,14 @@
 ﻿#pragma once
 #include <Siv3D.hpp>
+#include "IconTemplate.h"
+
+extern User me;
 
 // ユーザーのアイコン等
-
 class UserIcon {
 private:
-	int32 userID = 0;
-	String src = U"example/siv3d-kun.png";
-	String name = U"名無し";
+	int32 txidx = me.iconIndex;
+	String name = Unicode::Widen(me.name);
 	Texture img;
 	int32 radius = 80;
 	Circle circle;
@@ -20,10 +21,11 @@ public:
 	const static int32 height = 250;
 
 	// コンストラクタ
-	UserIcon(const int32& userID, const String& src, const String& name)
-		: userID(userID), src(src), name(name)
+	UserIcon() {};
+	UserIcon(const int32& txidx, const String& name)
+		: txidx(txidx), name(name)
 	{
-		img = Texture(src, TextureDesc::Mipped);
+		img = IconTemplate::textures[txidx % IconTemplate::textures.size()];
 	}
 
 	// volumeの更新
@@ -32,6 +34,10 @@ public:
 		this->volume = volume;
 		this->center = center;
 		circle = Circle(0, 0, radius).movedBy(center);
+	}
+
+	void setName(const String& name) {
+		this->name = name;
 	}
 
 	// 描画

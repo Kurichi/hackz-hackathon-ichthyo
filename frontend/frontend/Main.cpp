@@ -46,8 +46,13 @@ using namespace boost::asio;
 //#include "RoomlistScene.h"// 部屋一覧シーン
 #include "UI/RoomScene.h"// 部屋シーン(ここで通話する)
 
+JudgeVoice jv;
+
+User me("watashi");
+
 void Main()
 {
+	SingletonUserArray::RegisterUser(me);
 
 	SingletonMicrophone::Set(1s, Loop::Yes, StartImmediately::Yes);
 	
@@ -55,7 +60,7 @@ void Main()
 	FontAsset::Register(U"Title", 120, Typeface::Bold);
 
 	SingletonSocket::SetMyEndpoint(udp::endpoint(udp::v4(), 32153));
-	UserVoiceRecorder recorder(udp::endpoint(address::from_string("219.94.241.220"), 1234), User("name"));
+	UserVoiceRecorder recorder(udp::endpoint(address::from_string("219.94.241.220"), 1234), me);
 
 	//UserVoiceRecorder recorder(udp::endpoint(ip::address::from_string("127.0.0.1"), 23236));
 	//SingletonSocket::SetMyEndpoint(udp::endpoint(udp::v4(), 32153));
@@ -79,7 +84,7 @@ void Main()
 
 	// 背景の色を設定 | Set background color
 	Scene::SetBackground(ColorF{ 0.8, 1.0, 1.0 });
-
+	
 	// シーンと遷移時の色を設定
 	MyApp manager;
 	manager
@@ -89,6 +94,8 @@ void Main()
 
 	while (System::Update())
 	{
+		// meの更新
+		// *me = SingletonUserArray::Search(user);
 		recorder.SendAudioData();
 		if (!manager.update())
 		{
