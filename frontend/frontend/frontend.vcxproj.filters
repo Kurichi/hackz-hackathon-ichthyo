@@ -857,7 +857,7 @@
     <ClInclude Include="src\Core\Audio\SingletonMicrophone.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\UI\NameSetModal.h">
+    <ClInclude Include="SingletonUserArray.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
