@@ -21,9 +21,11 @@ public:
 	const static int32 height = 250;
 
 	// コンストラクタ
-	UserIcon()
+	UserIcon() {};
+	UserIcon(const int32& txidx, const String& name)
+		: txidx(txidx), name(name)
 	{
-		img = IconTemplate::textures[txidx];
+		img = IconTemplate::textures[txidx % IconTemplate::textures.size()];
 	}
 
 	// volumeの更新

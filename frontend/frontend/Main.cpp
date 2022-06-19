@@ -52,6 +52,7 @@ User me("watashi");
 
 void Main()
 {
+	SingletonUserArray::RegisterUser(me);
 
 	SingletonMicrophone::Set(1s, Loop::Yes, StartImmediately::Yes);
 	

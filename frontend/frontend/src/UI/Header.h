@@ -24,7 +24,8 @@ public:
 	// コンストラクタ
 	const Header()
 	{
-		img = IconTemplate::textures[me.iconIndex];
+		IconTemplate::Init();
+		img = IconTemplate::textures[me.iconIndex % IconTemplate::textures.size()];
 		microphone = ToggleButton(0xf130, height / 2 * 3, height / 2, radius);
 		headphone = ToggleButton(0xf028, height / 2 * 5, height / 2, radius);
 		//headphone = ToggleButton(0xf6a8, height / 2 * 5, height / 2, radius);

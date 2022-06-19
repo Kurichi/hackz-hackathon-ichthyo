@@ -6,6 +6,7 @@
 #include "UserIcon.h"
 #include "Core/Audio/SingletonMicrophone.h"
 #include "Core/JudgeVoice.hpp"
+#include "Core/User/SingletonUserArray.h"
 
 extern JudgeVoice jv;
 
@@ -29,11 +30,14 @@ public:
 	// コンストラクタ
 	Room(const InitData& init) : IScene(init)
 	{
-		//std::shared_ptr<Array<User>> userArray = Singletonnantoka::Get();
+		auto userArray = SingletonUserArray::Get();
 		// 更新があったときにも update 関数内で読み込む
 		usericons.clear();
-		for (auto i : step(getData().namelist.size())) {
-			usericons << UserIcon();
+		for (auto i : step(userArray->size())) {
+			usericons << UserIcon(
+				(*userArray)[i].iconIndex,
+				Unicode::Widen((*userArray)[i].name)
+			);
 		}
 
 		// マイク関連
@@ -79,10 +83,10 @@ public:
 
 	void draw() const override
 	{
-		//std::shared_ptr<Array<User>> userArray = Singletonnantoka::Get();
+		//auto userArray = SingletonUserArray::Get();
+		//User* hoge = SingletonUserArray::Search(me);
 		// ユーザアイコンの描画
-		//for (auto i : step(userArray->size())) {
-		for (auto i : step(getData().namelist.size())) {
+		for (auto i : step(usericons.size())) {
 			usericons[i].draw();
 		}
 
