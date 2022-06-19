@@ -27,6 +27,3 @@ public:
 	}
 };
 
-bool UsersVoicePlayer::IsSpeakerMute() {
-	return this->speakerMuteFlag;
-}

@@ -40,6 +40,10 @@ void UsersVoicePlayer::ReceiveAndPlayLoop() {
 	}
 }
 
+bool UsersVoicePlayer::IsSpeakerMute() {
+	return this->speakerMuteFlag;
+}
+
 bool UsersVoicePlayer::IsUserAudioPlaying(const std::string& uuid) const{
 	return this->audioUUIDMap.at(uuid).isPlaying();
 }
