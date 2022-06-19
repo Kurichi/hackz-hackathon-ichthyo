@@ -4,6 +4,7 @@ frontend/frontend/App/*.exe
 frontend/.vs
 *.user
 .editorconfig
+*.ogg
 
 frontend/frontend/src/UI/App/*.exe
 frontend/frontend/src/UI/Intermediate
@@ -11,5 +12,8 @@ frontend/frontend/src/UI/.vs
 frontend/frontend/src/UI/*.user
 frontend/frontend/src/UI/.editorconfig
 
+
 backend/Server
 backend/*.o
+backend/*.out
+backend/test.cpp
