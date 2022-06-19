@@ -69,11 +69,12 @@
       <ConformanceMode>true</ConformanceMode>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
-      <LanguageStandard>stdcpplatest</LanguageStandard>
+      <LanguageStandard>stdcpp20</LanguageStandard>
       <DisableSpecificWarnings>26451;26812;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <AdditionalOptions>/Zc:__cplusplus %(AdditionalOptions)</AdditionalOptions>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <ForcedIncludeFiles>stdafx.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <AdditionalIncludeDirectories>$(ProjectDir)src; $(ProjectDir);C:\boost_1_79_0</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -114,10 +115,18 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="src\Core\Audio\Recorder\Recorder.cpp" />
+    <ClCompile Include="src\Core\Audio\SingletonMicrophone\SingletonMicrophone.cpp" />
+    <ClCompile Include="src\Core\Connection\SingletonSocket\SingletonSocket.cpp" />
+    <ClCompile Include="src\Core\Util\Util.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="src\Core\Audio\UsersVoicePlayer\UsersVoicePlayer.cpp" />
+    <ClCompile Include="src\Core\Connection\UDPReceiver\UDPReceiver.cpp" />
+    <ClCompile Include="src\Core\Audio\UserVoiceRecorder\UserVoiceRecorder.cpp" />
+    <ClCompile Include="src\Core\User\User.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="App\engine\texture\box-shadow\128.png" />
@@ -313,7 +322,25 @@
     <Xml Include="App\example\xml\test.xml" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Core\Audio\SingletonMicrophone.h" />
+    <ClInclude Include="src\Core\Audio\Recorder.h" />
+    <ClInclude Include="src\Core\Connection\SingletonSocket.h" />
+    <ClInclude Include="src\Core\JudgeVoice.hpp" />
+    <ClInclude Include="src\Core\Util.h" />
+    <ClInclude Include="src\UI\Header.h" />
+    <ClInclude Include="src\UI\JoinButton.h" />
+    <ClInclude Include="src\UI\RoomBanner.h" />
+    <ClInclude Include="src\UI\RoomlistScene.h" />
+    <ClInclude Include="src\UI\RoomScene.h" />
+    <ClInclude Include="src\UI\Scene.h" />
+    <ClInclude Include="src\UI\ToggleButton.h" />
+    <ClInclude Include="src\UI\UserData.h" />
+    <ClInclude Include="src\UI\UserIcon.h" />
     <ClInclude Include="stdafx.h" />
+    <ClInclude Include="src\Core\Audio\UsersVoicePlayer.h" />
+    <ClInclude Include="src\Core\Connection\UDPReceiver.h" />
+    <ClInclude Include="src\Core\Audio\UserVoiceRecorder.h" />
+    <ClInclude Include="src\Core\User.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App\example\obj\blacksmith.obj">

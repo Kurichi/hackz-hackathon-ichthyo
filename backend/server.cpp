@@ -37,7 +37,6 @@ void Server::receive() {
   while (isLoop) {
     boost::array<char, BUF_SIZE> recv_buf;
     boost::asio::ip::udp::endpoint endpoint;
-
     size_t len = sock.receive_from(boost::asio::buffer(recv_buf), endpoint);
     clientList.insert(endpoint);
 
