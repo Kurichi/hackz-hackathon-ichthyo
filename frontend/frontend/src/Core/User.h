@@ -13,8 +13,17 @@ struct User {
 
 	User(const std::string& name, const std::string& uuid):
 		name(name),
-		uuids(uuid)
+		uuids(uuid),
+		iconIndex(0)
 	{	}
+	
+	User(const std::string& name) :
+		name(name),
+		uuids(),
+		iconIndex(0)
+	{
+		this->GenerateUUID();
+	}
 
 	void GenerateUUID() {
 		this->uuids = boost::lexical_cast<std::string>(boost::uuids::random_generator{}());
