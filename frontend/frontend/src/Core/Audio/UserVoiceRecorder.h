@@ -25,10 +25,15 @@ public:
 	UserVoiceRecorder(const boost::asio::ip::udp::endpoint& serverEndpoint, const User& myUser);
 	void SendAudioData();
 	bool ToggleMute();
+	bool IsMute();
 };
 
 inline bool UserVoiceRecorder::ToggleMute() {
 	this->muteFlag = !(this->muteFlag);
+	return this->muteFlag;
+}
+
+inline bool UserVoiceRecorder::IsMute() {
 	return this->muteFlag;
 }
 

@@ -21,8 +21,12 @@ public:
 	void ReceiveAndPlayLoop();
 	bool IsUserAudioPlaying(const std::string& uuid) const;
 	bool ToggleSpeakerMute();
+	bool IsSpeakerMute();
 	void StopLoop() {
 		continueFlag = false;
 	}
 };
 
+bool UsersVoicePlayer::IsSpeakerMute() {
+	return this->speakerMuteFlag;
+}
