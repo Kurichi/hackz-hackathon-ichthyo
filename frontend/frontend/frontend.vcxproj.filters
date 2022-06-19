@@ -171,6 +171,9 @@
     <ClCompile Include="src\Core\JudgeVoice\JudgeVoice.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\Core\User\SingletonUserArray\SingletonUserArray.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="App\icon.ico">
@@ -857,7 +860,7 @@
     <ClInclude Include="src\Core\Audio\SingletonMicrophone.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="SingletonUserArray.h">
+    <ClInclude Include="src\Core\User\SingletonUserArray.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
