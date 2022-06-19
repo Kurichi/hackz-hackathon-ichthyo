@@ -13,7 +13,8 @@ UserVoiceRecorder::UserVoiceRecorder(const udp::endpoint& serverEndpoint, const 
 	serverEndpoint(serverEndpoint),
 	socket(SingletonSocket::Get()),
 	sock(ios, udp::endpoint(address::from_string("127.0.0.1"), 32153)),
-	myUser(User)
+	myUser(User),
+	muteFlag(false)
 {
 	SendVoice.reset(new std::thread([&] {
 		while (true) {
@@ -21,6 +22,11 @@ UserVoiceRecorder::UserVoiceRecorder(const udp::endpoint& serverEndpoint, const 
 				boost::asio::io_service io_service;
 				Wave wave = VoiceQueue.front();
 				this->VoiceQueue.pop();
+
+				if (this->muteFlag) {
+					continue;
+				}
+
 				const std::string audioPath = (this->tmpAudioFileDirectory / "hoge.ogg").string();
 				if (!wave.save(Unicode::Widen(audioPath))) {
 					return;

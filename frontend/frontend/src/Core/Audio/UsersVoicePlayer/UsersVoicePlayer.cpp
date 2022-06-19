@@ -10,7 +10,8 @@ UsersVoicePlayer::UsersVoicePlayer(
 	receivedAudioPath("receivedAudio"),
 	udpReceiver(),
 	serverEndpoint(serverEndpoint),
-	continueFlag(true)
+	continueFlag(true),
+	speakerMuteFlag(false)
 {}
 
 void UsersVoicePlayer::ReceiveAndPlayLoop() {
