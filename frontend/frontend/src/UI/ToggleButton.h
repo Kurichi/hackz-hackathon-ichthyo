@@ -12,7 +12,8 @@ private:
 	int32 radius;
 	Circle circle;
 	bool boolean;
-	Transition tss;
+	Transition tss_mov = Transition(0.1s, 0.2s);
+	Transition tss_lcl = Transition(0.1s, 0.2s);
 public:
 
 	const static int32 width = 200;
@@ -31,8 +32,10 @@ public:
 	void update(const bool& boolean)
 	{
 		this->boolean = boolean;
-		tss.update(circle.mouseOver());
+		tss_mov.update(circle.mouseOver());
 		if(circle.mouseOver())Cursor::RequestStyle(CursorStyle::Hand);
+
+		tss_lcl.update(!boolean);
 	}
 
 	bool leftClicked() {
@@ -42,7 +45,14 @@ public:
 	// 描画
 	void draw() const
 	{
-		circle.draw(ColorF(0.4, 0.4, 1.0, tss.value()));
+		circle.draw(ColorF(0.4, 0.4, 1.0, tss_mov.value()));
 		img.scaled(0.6).drawAt(x, y);
+		if (!boolean || true) {
+			Line(
+				Point(radius, -radius).operator*(tss_lcl.value() * 0.6),
+				Point(-radius, radius).operator*(tss_lcl.value() * 0.6)
+			).movedBy(circle.center)
+				.draw(LineStyle::RoundCap, 3, ColorF(1.0));
+		}
 	}
 };
