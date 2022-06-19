@@ -12,4 +12,12 @@ bool SingletonUserArray::RegisterUser(const User& user) {
 	return true;
 }
 
+User* SingletonUserArray::Search(const User& user) {
+	for (auto& u : *userArray) {
+		if (u.uuids == user.uuids) {
+			return &u;
+		}
+		return nullptr;
+	}
 
+}

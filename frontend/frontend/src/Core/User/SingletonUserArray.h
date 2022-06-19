@@ -10,5 +10,6 @@ public:
 		return userArray;
 	}
 	bool RegisterUser(const User& user);
+	User* Search(const User& user);
 
 };
