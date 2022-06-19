@@ -18,5 +18,4 @@ public:
 	}
 };
 
-std::shared_ptr<Microphone> SingletonMicrophone::microphone{ nullptr };
 

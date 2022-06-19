@@ -14,10 +14,27 @@ private:
 	double previousSendedTime;
 	boost::asio::ip::udp::endpoint serverEndpoint;
 	std::shared_ptr<boost::asio::ip::udp::socket> socket;
+	std::queue<Wave> VoiceQueue;
+	std::unique_ptr<std::thread> SendVoice;
+	const User& myUser;
+	bool muteFlag;
+	//いらない
 	boost::asio::io_service ios;
 	boost::asio::ip::udp::socket sock;
 public:
-	UserVoiceRecorder(const boost::asio::ip::udp::endpoint& serverEndpoint);
-	void SendAudioData(const User& myUser);
+	UserVoiceRecorder(const boost::asio::ip::udp::endpoint& serverEndpoint, const User& myUser);
+	void SendAudioData();
+	bool ToggleMute();
+	bool IsMute();
 };
+
+inline bool UserVoiceRecorder::ToggleMute() {
+	this->muteFlag = !(this->muteFlag);
+	return this->muteFlag;
+}
+
+inline bool UserVoiceRecorder::IsMute() {
+	return this->muteFlag;
+}
+
 

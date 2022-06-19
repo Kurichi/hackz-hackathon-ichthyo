@@ -6,51 +6,55 @@
 
 using namespace boost::asio::ip;
 
-UserVoiceRecorder::UserVoiceRecorder(const udp::endpoint& serverEndpoint) :
+UserVoiceRecorder::UserVoiceRecorder(const udp::endpoint& serverEndpoint, const User &User) :
 	tmpAudioFileDirectory("tmpAudio"),
 	previousSendedTime(0),
-	recorder(1s, Loop::Yes, StartImmediately::Yes),
+	recorder(),
 	serverEndpoint(serverEndpoint),
 	socket(SingletonSocket::Get()),
-	sock(ios, udp::endpoint(address::from_string("127.0.0.1"), 32153))
+	sock(ios, udp::endpoint(address::from_string("127.0.0.1"), 32153)),
+	myUser(User),
+	muteFlag(false)
 {
+	SendVoice.reset(new std::thread([&] {
+		while (true) {
+			if (!this->VoiceQueue.empty()) {
+				boost::asio::io_service io_service;
+				Wave wave = VoiceQueue.front();
+				this->VoiceQueue.pop();
+
+				if (this->muteFlag) {
+					continue;
+				}
+
+				const std::string audioPath = (this->tmpAudioFileDirectory / "hoge.ogg").string();
+				if (!wave.save(Unicode::Widen(audioPath))) {
+					return;
+				}
+				std::string data = std::format("{}\n{}\n{}\n{}\n", myUser.name, "uuid", 0, 1);
+				std::string tmp;
+				Util::ReadBinary(tmp, audioPath);
+				data += tmp;
+				try {
+					this->socket->send_to(boost::asio::buffer(data), this->serverEndpoint);
+				}
+				catch (std::exception& e) {
+					e.what();
+				}
+			}
+		}
+		}));
 	this->recorder.SetMicrophoneRecordDuration(1s);
 }
 
-void UserVoiceRecorder::SendAudioData(const User& myUser ) {
+void UserVoiceRecorder::SendAudioData() {
 
-	static std::unique_ptr<std::thread> sendAudioThreadPtr = nullptr;
-	if (this->previousSendedTime + 1 > Scene::Time()) {
+	previousSendedTime += Scene::DeltaTime();
+	if (this->previousSendedTime < 0.998) {
 		return;
 	}
-	boost::asio::io_service io_service;
-	previousSendedTime = Scene::Time();
+	previousSendedTime = 0;
 	Wave wave = recorder.GetRecentWave();
-	if (sendAudioThreadPtr != nullptr)
-	{
-		sendAudioThreadPtr->join();
-	}
+	VoiceQueue.push(wave);
 
-	sendAudioThreadPtr.reset(new std::thread([wave, &myUser, this]{
-		const std::string audioPath = (this->tmpAudioFileDirectory / "hoge.ogg").string();
-		if (!wave.save(Unicode::Widen(audioPath))) {
-			return;
-		}
-
-		std::string data = std::format("{}\n{}\n{}\n{}\n", myUser.name, "uuid", 0, 1);
-		std::string tmp;
-
-		Util::ReadBinary(tmp, audioPath);
-
-		data += tmp;
-
-		try {
-			this->socket->send_to(boost::asio::buffer(data), this->serverEndpoint);
-		}
-		catch (std::exception& e) {
-			e.what();
-		}
-
-		}));
 }
-
