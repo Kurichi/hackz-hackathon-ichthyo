@@ -2,7 +2,10 @@
 #include <Siv3D.hpp>
 #include "Scene.h"
 #include "Header.h"
+#include "NameSetModal.h"
 #include "UserIcon.h"
+#include "Core/Audio/SingletonMicrophone.h"
+#include "Core/JudgeVoice.hpp"
 
 // 部屋シーン(ここで通話する)
 class Room : public MyApp::Scene
@@ -10,9 +13,13 @@ class Room : public MyApp::Scene
 private:
 
 	Header header;
+	NameSetModal nsm;
 	Array<UserIcon> usericons;
 	int32 w;
 	int32 scrollY = 0;
+	std::shared_ptr<s3d::Microphone> mic;
+	JudgeVoice jv;
+	FFTResult fft;
 
 public:
 
@@ -34,6 +41,10 @@ public:
 				getData().namelist[i]
 			);
 		}
+
+		// マイク関連
+		mic = SingletonMicrophone::Get();
+		mic->fft(fft);
 	}
 
 	void update() override
@@ -49,16 +60,26 @@ public:
 		scrollY = Max(0, scrollY);
 		scrollY = Min(scrollY, int32(UserIcon::height * (usericons.size() / w - 1)));
 
-		// ユーザアイコンの位置指定
+		// ユーザアイコンの位置・装飾更新
 		for (auto i : step(usericons.size())) {
 			usericons[i].update(
-				1.0 * i / (usericons.size() - 1),
+				jv.GetAveAmp(fft) / 0.004,
 				Scene::Center().movedBy(
 					UserIcon::width * (i % w - w / 2.0 + 0.5),
 					UserIcon::height * (i / w) - scrollY - 100
 				)
 			);
 		}
+
+		// 名前クリック時にnsm表示．
+		//nsm.update()
+
+		// sIn, sOutの更新
+		if (header.update_sIn()) getData().sIn ^= 1;
+		if (header.update_sOut()) getData().sOut ^= 1;
+
+		// fft更新
+		mic->fft(fft);
 	}
 
 	void draw() const override
