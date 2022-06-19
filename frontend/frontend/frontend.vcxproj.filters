@@ -252,6 +252,22 @@
     <Text Include="App\example\txt\kr.txt" />
     <Text Include="App\example\txt\sc.txt" />
     <Text Include="App\example\video\river.txt" />
+    <Text Include="App\dll\soundtouch\COPYING.TXT" />
+    <Text Include="App\engine\font\fontawesome\LICENSE.txt" />
+    <Text Include="App\engine\soundfont\GMGSx.sf2.txt" />
+    <Text Include="App\example\font\DotGothic16\OFL.txt" />
+    <Text Include="App\example\font\RocknRoll\OFL.txt" />
+    <Text Include="App\example\LICENSE.txt" />
+    <Text Include="App\example\midi\test.txt" />
+    <Text Include="App\example\obj\credit.txt" />
+    <Text Include="App\example\spritesheet\siv3d-kun-16.txt" />
+    <Text Include="App\example\svg\README.txt" />
+    <Text Include="App\example\texture\credit.txt" />
+    <Text Include="App\example\txt\en.txt" />
+    <Text Include="App\example\txt\jp.txt" />
+    <Text Include="App\example\txt\kr.txt" />
+    <Text Include="App\example\txt\sc.txt" />
+    <Text Include="App\example\video\river.txt" />
     <ClInclude Include="stdafx.h">
       <Filter>Header Files</Filter>
     </ClInclude>
