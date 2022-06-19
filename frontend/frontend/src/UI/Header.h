@@ -38,7 +38,15 @@ public:
 		// アイコンの設定
 		microphone.update(sIn);
 		headphone.update(sOut);
-	} 
+	}
+
+	bool update_sIn () {
+		return microphone.leftClicked();
+	}
+
+	bool update_sOut() {
+		return headphone.leftClicked();
+	}
 
 	// 描画
 	void draw() const

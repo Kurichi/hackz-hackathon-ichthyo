@@ -46,6 +46,8 @@ using namespace boost::asio;
 //#include "RoomlistScene.h"// 部屋一覧シーン
 #include "UI/RoomScene.h"// 部屋シーン(ここで通話する)
 
+JudgeVoice jv;
+
 void Main()
 {
 
@@ -79,7 +81,7 @@ void Main()
 
 	// 背景の色を設定 | Set background color
 	Scene::SetBackground(ColorF{ 0.8, 1.0, 1.0 });
-
+	
 	// シーンと遷移時の色を設定
 	MyApp manager;
 	manager

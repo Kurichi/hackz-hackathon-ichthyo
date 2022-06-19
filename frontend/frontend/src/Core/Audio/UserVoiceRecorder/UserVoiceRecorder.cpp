@@ -3,8 +3,12 @@
 #include "Core/User.h"
 #include <format>
 #include "Core/Util.h"
+#include "Core/Audio/SingletonMicrophone.h"
+#include "Core/JudgeVoice.hpp"
 
 using namespace boost::asio::ip;
+
+extern JudgeVoice jv;
 
 UserVoiceRecorder::UserVoiceRecorder(const udp::endpoint& serverEndpoint, const User &User) :
 	tmpAudioFileDirectory("tmpAudio"),
@@ -17,13 +21,14 @@ UserVoiceRecorder::UserVoiceRecorder(const udp::endpoint& serverEndpoint, const 
 	muteFlag(false)
 {
 	SendVoice.reset(new std::thread([&] {
+		JudgeVoice judge(AVE_AMP);
 		while (true) {
 			if (!this->VoiceQueue.empty()) {
 				boost::asio::io_service io_service;
 				Wave wave = VoiceQueue.front();
 				this->VoiceQueue.pop();
-
-				if (this->muteFlag) {
+				std::shared_ptr<Microphone> mic = SingletonMicrophone::Get();
+				if (!jv.Judge(mic) || muteFlag) {
 					continue;
 				}
 

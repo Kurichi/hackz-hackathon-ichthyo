@@ -21,9 +21,9 @@ void JudgeVoice::SetType(int type_) {
 
 }
 
-bool JudgeVoice::Judge(Microphone& mic) {
+bool JudgeVoice::Judge(std::shared_ptr<Microphone> mic) {
 	FFTResult fft;
-	mic.fft(fft);
+	mic->fft(fft);
 
 	bool aveamp = true;
 	bool pitch = true;

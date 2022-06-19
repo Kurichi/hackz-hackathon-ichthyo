@@ -168,7 +168,7 @@
     <ClCompile Include="src\Core\Audio\SingletonMicrophone\SingletonMicrophone.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="SingletonUserArray.cpp">
+    <ClCompile Include="src\Core\JudgeVoice\JudgeVoice.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
