@@ -10,12 +10,17 @@ UsersVoicePlayer::UsersVoicePlayer(
 	receivedAudioPath("receivedAudio"),
 	udpReceiver(),
 	serverEndpoint(serverEndpoint),
-	continueFlag(true)
+	continueFlag(true),
+	speakerMuteFlag(false)
 {}
 
 void UsersVoicePlayer::ReceiveAndPlayLoop() {
 	while (this->continueFlag) {
 		std::string data = this->udpReceiver.Receive();
+
+		if (this->speakerMuteFlag) {
+			continue;
+		}
 		
 		Util::ReceivedData recvData{ data };
 
@@ -35,6 +40,15 @@ void UsersVoicePlayer::ReceiveAndPlayLoop() {
 	}
 }
 
+bool UsersVoicePlayer::IsSpeakerMute() {
+	return this->speakerMuteFlag;
+}
+
 bool UsersVoicePlayer::IsUserAudioPlaying(const std::string& uuid) const{
 	return this->audioUUIDMap.at(uuid).isPlaying();
+}
+
+bool UsersVoicePlayer::ToggleSpeakerMute() {
+	this->speakerMuteFlag = !(this->speakerMuteFlag);
+	return this->speakerMuteFlag;
 }
