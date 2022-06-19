@@ -330,6 +330,7 @@
     <ClInclude Include="src\Core\Util.h" />
     <ClInclude Include="src\UI\Header.h" />
     <ClInclude Include="src\UI\JoinButton.h" />
+    <ClInclude Include="src\UI\NameSetModal.h" />
     <ClInclude Include="src\UI\RoomBanner.h" />
     <ClInclude Include="src\UI\RoomlistScene.h" />
     <ClInclude Include="src\UI\RoomScene.h" />

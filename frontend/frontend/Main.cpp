@@ -46,7 +46,7 @@ using namespace boost::asio;
 //#include "RoomlistScene.h"// 部屋一覧シーン
 #include "UI/RoomScene.h"// 部屋シーン(ここで通話する)
 
-JudgeVoice jv;
+JudgeVoice jv(PITCH);
 
 void Main()
 {

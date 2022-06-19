@@ -62,10 +62,20 @@ public:
 		scrollY = Min(scrollY, int32(UserIcon::height * (usericons.size() / w - 1)));
 
 		// ユーザアイコンの位置・装飾更新
+		
+		//アイコン周りのゲージの値を計算
+		double val = 0;
+		int type = jv.GetType();
+		mic = SingletonMicrophone::Get();
+		mic->fft(fft);
+		if (type & AVE_AMP) val = jv.GetAveAmp(fft)/0.005;
+		if (type & PITCH) val = jv.GetPitch(fft)/1000;
+		if (type & L_AVE_AMP) val = jv.GetAveAmp(fft) / 0.002;
+		if (type & L_PITCH) val = jv.GetPitch(fft) / 400;
+
 		for (auto i : step(usericons.size())) {
 			usericons[i].update(
-				jv.GetAveAmp(fft) / 0.004,
-				Scene::Center().movedBy(
+				val,Scene::Center().movedBy(
 					UserIcon::width * (i % w - w / 2.0 + 0.5),
 					UserIcon::height * (i / w) - scrollY - 100
 				)
