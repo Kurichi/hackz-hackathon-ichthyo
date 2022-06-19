@@ -16,14 +16,18 @@ public:
 	bool Judge(Microphone& mic);
 	double GetAveAmp(FFTResult fft);
 	double GetPitch(FFTResult fft);
+	double GetAmpThre() {
+		return amp_thre;
+	};
+	double GetPitchThre() {
+		return pitch_thre;
+	};
 	int GetType() {
 		return judgetype;
 	};
 private:
 	bool JudgeforAveAmp(FFTResult fft);
-	bool JudgeforLAveAmp(FFTResult fft);
 	bool JudgeforPitch(FFTResult fft);
-	bool JudgeforLPitch(FFTResult fft);
 	int judgetype; //îªífäÓèÄ
 	double amp_thre;
 	double pitch_thre;
