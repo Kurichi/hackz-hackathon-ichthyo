@@ -6,8 +6,6 @@
 #include <iostream>
 #include <set>
 
-// using namespace boost::asio::ip;
-
 class Server {
  private:
   static constexpr int BUF_SIZE = 60000;
@@ -24,14 +22,14 @@ class Server {
 
  public:
   Server();
-  Server(const std::vector<std::string> &args);
+  Server(const std::vector<std::string>& args);
 
   void start();
   void receive();
-  void broadcast(const boost::asio::ip::udp::endpoint endpoint,
-                 const std::string str);
+  void broadcast(const boost::asio::ip::udp::endpoint& endpoint,
+                 const std::string& str);
   void command();
-  void debug(std::string message);
+  void debug(const std::string message);
 };
 
 #endif  // _SERVER_H_

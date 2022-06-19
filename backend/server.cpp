@@ -12,6 +12,7 @@ Server::Server()
 Server::Server(const std::vector<std::string> &args)
     : sock(io_service,
            boost::asio::ip::udp::endpoint(boost::asio::ip::udp::v4(), PORT)) {
+  // command line argument
   for (const auto &arg : args) {
     if (arg == "--debug") {
       std::cout << "[option] Debug mode" << std::endl;
@@ -34,18 +35,18 @@ void Server::start() {
 
 void Server::receive() {
   while (isLoop) {
-    // 送られてきた音声情報が入る
     boost::array<char, BUF_SIZE> recv_buf;
-    // しゃべった人情報
     boost::asio::ip::udp::endpoint endpoint;
 
     size_t len = sock.receive_from(boost::asio::buffer(recv_buf), endpoint);
     clientList.insert(endpoint);
 
+    // [receive] IP : port Size: recv_size
     debug((boost::format("[receive] %1% : %2% Size: %3%") % endpoint.address() %
            endpoint.port() % len)
               .str());
 
+    // recv_buf to string
     std::stringstream ss;
     ss.write(recv_buf.data(), len);
 
@@ -54,11 +55,9 @@ void Server::receive() {
   sock.close();
 }
 
-// endpoint を除く client 全員に送信
-void Server::broadcast(const boost::asio::ip::udp::endpoint endpoint,
-                       const std::string str) {
+void Server::broadcast(const boost::asio::ip::udp::endpoint &endpoint,
+                       const std::string &str) {
   for (const auto &client : clientList) {
-    // 送ってきた人とclientが同一なら読み飛ばす
     if (endpoint == client && !isReturn) continue;
 
     sock.send_to(
@@ -74,10 +73,16 @@ void Server::command() {
 
     if (str == "/close" || str == "/quit") {
       isLoop = false;
+      std::cout << "[command] Server shutdown..." << std::endl;
     } else if (str == "/log" || str == "/debug") {
       isDebug = !isDebug;
+      std::cout << "[command] Debug mode switched" << std::endl;
     } else if (str == "/return") {
       isReturn = !isReturn;
+      std::cout << "[command] Return mode switched" << std::endl;
+    } else if (str == "/reset") {
+      clientList.clear();
+      std::cout << "[command] Reset client list" << std::endl;
     } else if (str == "/help") {
       std::cout << "===== COMMAND LIST =====\n";
       std::cout << "/close or /quit\n";
@@ -86,13 +91,17 @@ void Server::command() {
       std::cout << "switch debug mode\n\n";
       std::cout << "/return\n";
       std::cout << "switch return mode\n\n";
+      std::cout << "/reset\n";
+      std::cout << "reset client list\n\n";
 
       std::cout << std::flush;
+    } else {
+      std::cout << "[warning] This command is not found" << std::endl;
     }
   }
 }
 
-void Server::debug(std::string message) {
+void Server::debug(const std::string message) {
   if (!isDebug) return;
 
   std::cout << message << std::endl;
