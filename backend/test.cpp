@@ -2,6 +2,7 @@
 #include <boost/asio.hpp>
 #include <iostream>
 #include <string>
+#include <thread>
 
 int main() {
   using namespace boost::asio::ip;
@@ -17,7 +18,7 @@ int main() {
     std::cin >> str;
 
     sock.send_to(boost::asio::buffer(str),
-                 udp::endpoint(address::from_string("127.0.0.1"), 1234));
+                 udp::endpoint(address::from_string("219.94.241.220"), 1234));
 
     //受信（受信できるまで待機される）
     boost::array<char, 128> recv_buf;
@@ -28,4 +29,3 @@ int main() {
     std::cout.write(recv_buf.data(), len);
   }
 }
-

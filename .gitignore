@@ -15,3 +15,5 @@ frontend/frontend/src/UI/.editorconfig
 
 backend/Server
 backend/*.o
+backend/*.out
+backend/test.cpp

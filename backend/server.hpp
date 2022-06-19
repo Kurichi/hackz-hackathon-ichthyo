@@ -6,23 +6,30 @@
 #include <iostream>
 #include <set>
 
-// using namespace boost::asio::ip;
-constexpr int MAX_BUF_SIZE = 60000;
-constexpr int PORT = 1234;
+class Server {
+ private:
+  static constexpr int BUF_SIZE = 60000;
+  static constexpr int PORT = 1234;
 
-class Server
-{
-private:
   boost::asio::io_service io_service;
   boost::asio::ip::udp::socket sock;
   std::set<boost::asio::ip::udp::endpoint> clientList;
 
-public:
+  bool isLoop = true;
+
+  bool isDebug = false;
+  bool isReturn = false;
+
+ public:
   Server();
+  Server(const std::vector<std::string>& args);
 
   void start();
   void receive();
-  void broadcast(boost::asio::ip::udp::endpoint endpoint, const std::string & str);
+  void broadcast(const boost::asio::ip::udp::endpoint& endpoint,
+                 const std::string& str);
+  void command();
+  void debug(const std::string message);
 };
 
-#endif // _SERVER_H_
+#endif  // _SERVER_H_
