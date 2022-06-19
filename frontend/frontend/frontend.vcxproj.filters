@@ -47,6 +47,12 @@
     <ClCompile Include="src\Core\JudgeVoice\JudgeVoice.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\UI\IconTemplate.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\JudgeVoice\JudgeVoice.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="src\Core\User\SingletonUserArray\SingletonUserArray.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -328,6 +334,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Core\Audio\SingletonMicrophone.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\UI\NameSetModal.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\UI\IconTemplate.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Core\User\SingletonUserArray.h">

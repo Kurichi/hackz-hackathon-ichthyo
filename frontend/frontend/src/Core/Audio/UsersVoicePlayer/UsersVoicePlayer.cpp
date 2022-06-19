@@ -2,6 +2,7 @@
 #include "Core/Audio/UsersVoicePlayer.h"
 #include "Core/Connection/UDPReceiver.h"
 #include "Core/Util.h"
+#include "Core/User/SingletonUserArray.h"
 
 //src/UI/roomscene.h
 extern bool spe_mute;
@@ -26,6 +27,13 @@ void UsersVoicePlayer::ReceiveAndPlayLoop() {
 		}
 		
 		Util::ReceivedData recvData{ data };
+		std::thread userAdder([&] {
+			User user = User(recvData.user.name, recvData.user.uuid);
+			User* up = SingletonUserArray::Search(user);
+			if (up == nullptr) {
+				SingletonUserArray::RegisterUser(user);
+			}
+			});
 
 		const std::string audioPath = std::format("{}/{}.ogg", this->receivedAudioPath.string(), recvData.user.uuid);
 
@@ -37,6 +45,7 @@ void UsersVoicePlayer::ReceiveAndPlayLoop() {
 		else {
 			this->audioUUIDMap.emplace(recvData.user.uuid, Audio(Unicode::Widen(audioPath)));
 		}
+		userAdder.join();
 		if (!this->audioUUIDMap.at(recvData.user.uuid)) continue;
 		this->audioUUIDMap.at(recvData.user.uuid).setVolume(1);
 		if(spe_mute) this->audioUUIDMap.at(recvData.user.uuid).playOneShot();

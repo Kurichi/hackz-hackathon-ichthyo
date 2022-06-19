@@ -48,8 +48,11 @@ using namespace boost::asio;
 
 JudgeVoice jv(AVE_AMP);
 
+User me("watashi");
+
 void Main()
 {
+	SingletonUserArray::RegisterUser(me);
 
 	SingletonMicrophone::Set(1s, Loop::Yes, StartImmediately::Yes);
 	
@@ -57,7 +60,7 @@ void Main()
 	FontAsset::Register(U"Title", 120, Typeface::Bold);
 
 	SingletonSocket::SetMyEndpoint(udp::endpoint(udp::v4(), 32153));
-	UserVoiceRecorder recorder(udp::endpoint(address::from_string("219.94.241.220"), 1234), User("name"));
+	UserVoiceRecorder recorder(udp::endpoint(address::from_string("219.94.241.220"), 1234), me);
 
 	//UserVoiceRecorder recorder(udp::endpoint(ip::address::from_string("127.0.0.1"), 23236));
 	//SingletonSocket::SetMyEndpoint(udp::endpoint(udp::v4(), 32153));
@@ -91,6 +94,8 @@ void Main()
 
 	while (System::Update())
 	{
+		// meの更新
+		// *me = SingletonUserArray::Search(user);
 		recorder.SendAudioData();
 		if (Key1.down()) jv.SetType(AVE_AMP);
 		if (Key2.down()) jv.SetType(L_AVE_AMP);

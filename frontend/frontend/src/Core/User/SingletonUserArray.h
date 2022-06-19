@@ -9,6 +9,7 @@ public:
 	static std::shared_ptr<Array<User>> Get() {
 		return userArray;
 	}
-	bool RegisterUser(const User& user);
+	static bool RegisterUser(const User& user);
+	static User* Search(const User& user);
 
 };

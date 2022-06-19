@@ -10,10 +10,9 @@ private:
 	String text;
 	Rect rect;
 	s3d::RoundRect rrect;
+	Transition tss = Transition(0.1s, 0.1s);
 
 public:
-
-	bool show = 0;
 
 	// コンストラクタ
 	const NameSetModal()
@@ -26,22 +25,24 @@ public:
 	}
 
 	// 更新
-	void update(const bool u)
+	void update(const bool& u)
 	{
 		TextInput::UpdateText(text);
+		tss.update(u);
 	}
 
 	// 描画
 	void draw() const
 	{
-		rrect.draw(ColorF(1.0));
-		font(text).draw(rect.stretched(-20));
+		rrect.draw(ColorF(1.0, tss.value()));
+		font(text).draw(rect.stretched(-20), ColorF(0.0, tss.value()));
 	}
 };
 
 /*
 
 To Do
+・Userクラスの使用
 ・名前変更モーダルの実装
 ・発言者のソート(線形補完でアニメーション)
 (・アイコン変更モーダルの実装(テンプレ))

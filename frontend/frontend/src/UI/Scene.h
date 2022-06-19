@@ -13,8 +13,8 @@ enum class State
 // シーン間で共有するデータ
 struct Data
 {
-	int roomidx = 0;
-	int32 currentUserID = 0;
+	//int roomidx = 0;
+	/*
 	Array<String> srclist = {
 		U"example/siv3d-kun.png",
 		U"example/siv3d-kun.png",
@@ -43,6 +43,7 @@ struct Data
 		U"名無しA",
 		U"名無しB"
 	};
+	*/
 	bool sIn = true;
 	bool sOut = true;
 };

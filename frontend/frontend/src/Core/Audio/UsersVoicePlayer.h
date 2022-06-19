@@ -7,7 +7,7 @@
 #include "Core/Connection/UDPReceiver.h"
 #include "Core/Util.h"
 
-class UsersVoicePlayer{
+class UsersVoicePlayer {
 private:
 	UDPReceiver udpReceiver;
 	boost::asio::ip::udp::endpoint serverEndpoint;
@@ -26,4 +26,3 @@ public:
 		continueFlag = false;
 	}
 };
-

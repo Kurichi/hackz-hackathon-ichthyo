@@ -1,13 +1,15 @@
 ﻿#pragma once
 #include <Siv3D.hpp>
 #include "ToggleButton.h"
+#include "IconTemplate.h"
 // 上部のメニュー
+
+extern User me;
 
 class Header {
 private:
-	int32 userID = 0;
-	String src = U"example/siv3d-kun.png";
-	String name = U"名無し";
+	int32 txidx = me.iconIndex;
+	String name = Unicode::Widen(me.name);
 	Texture img;
 	ToggleButton microphone;
 	ToggleButton headphone;
@@ -16,15 +18,14 @@ private:
 	ColorF bgColor = ColorF(0.3, 0.1, 1.0);
 	Circle circle = Circle(0, 0, radius).movedBy(height / 2, height / 2);
 	Font font = Font(30);
+	RectF namearea;
 public:
 
 	// コンストラクタ
-	// ユーザID, 画像パス, ユーザ名
-	const Header() {};
-	const Header(const int32& userID, const String& src, const String& name)
-		: userID(userID), src(src), name(name)
+	const Header()
 	{
-		img = Texture(src, TextureDesc::Mipped);
+		IconTemplate::Init();
+		img = IconTemplate::textures[me.iconIndex % IconTemplate::textures.size()];
 		microphone = ToggleButton(0xf130, height / 2 * 3, height / 2, radius);
 		headphone = ToggleButton(0xf028, height / 2 * 5, height / 2, radius);
 		//headphone = ToggleButton(0xf6a8, height / 2 * 5, height / 2, radius);
@@ -38,6 +39,15 @@ public:
 		// アイコンの設定
 		microphone.update(sIn);
 		headphone.update(sOut);
+
+		// 名前表示部分のRect
+		namearea = font(name).region(
+			Arg::leftCenter = Point(height * 3 + 10, height / 2)
+		);
+	}
+
+	bool nameLeftClicked() {
+		return namearea.leftClicked();
 	}
 
 	bool update_sIn () {

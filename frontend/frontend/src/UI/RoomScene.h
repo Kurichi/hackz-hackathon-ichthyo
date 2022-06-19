@@ -6,10 +6,13 @@
 #include "UserIcon.h"
 #include "Core/Audio/SingletonMicrophone.h"
 #include "Core/JudgeVoice.hpp"
+#include "Core/User/SingletonUserArray.h"
 
 extern JudgeVoice jv;
 bool mic_mute = true;
 bool spe_mute = true;
+
+extern User me;
 
 // 部屋シーン(ここで通話する)
 class Room : public MyApp::Scene
@@ -29,19 +32,13 @@ public:
 	// コンストラクタ
 	Room(const InitData& init) : IScene(init)
 	{
-		// ここでユーザ情報を読み込む
+		auto userArray = SingletonUserArray::Get();
 		// 更新があったときにも update 関数内で読み込む
-		header = Header(
-			getData().currentUserID,
-			getData().srclist[getData().currentUserID],
-			getData().namelist[getData().currentUserID]
-		);
 		usericons.clear();
-		for (auto i : step(getData().namelist.size())) {
+		for (auto i : step(userArray->size())) {
 			usericons << UserIcon(
-				i,
-				getData().srclist[i],
-				getData().namelist[i]
+				(*userArray)[i].iconIndex,
+				Unicode::Widen((*userArray)[i].name)
 			);
 		}
 
@@ -52,6 +49,18 @@ public:
 
 	void update() override
 	{
+
+		auto userArray = SingletonUserArray::Get();
+		for (int i = usericons.size(); i < userArray->size(); i++) {
+			usericons << UserIcon(
+				(*userArray)[i].iconIndex,
+				Unicode::Widen((*userArray)[i].name)
+			);
+		}
+		for (auto i : step(userArray->size())) {
+			usericons[i].setName(Unicode::Widen((*userArray)[i].name));
+		}
+		
 		// ヘッダの更新
 		header.update(getData().sIn, getData().sOut);
 
@@ -85,7 +94,7 @@ public:
 		}
 
 		// 名前クリック時にnsm表示．
-		//nsm.update()
+		nsm.update(header.nameLeftClicked());
 
 		// sIn, sOutの更新
 		if (header.update_sIn()) {
@@ -102,6 +111,8 @@ public:
 
 	void draw() const override
 	{
+		//auto userArray = SingletonUserArray::Get();
+		//User* hoge = SingletonUserArray::Search(me);
 		// ユーザアイコンの描画
 		for (auto i : step(usericons.size())) {
 			usericons[i].draw();
