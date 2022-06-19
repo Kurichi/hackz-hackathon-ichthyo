@@ -47,6 +47,17 @@ public:
 
 	void update() override
 	{
+
+		auto userArray = SingletonUserArray::Get();
+		for (int i = usericons.size(); i < userArray->size(); i++) {
+			usericons << UserIcon(
+				(*userArray)[i].iconIndex,
+				Unicode::Widen((*userArray)[i].name)
+			);
+		}
+		for (auto i : step(userArray->size())) {
+			usericons[i].setName(Unicode::Widen((*userArray)[i].name));
+		}
 		
 		// ヘッダの更新
 		header.update(getData().sIn, getData().sOut);

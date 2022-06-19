@@ -42,10 +42,11 @@ void UsersVoicePlayer::ReceiveAndPlayLoop() {
 		else {
 			this->audioUUIDMap.emplace(recvData.user.uuid, Audio(Unicode::Widen(audioPath)));
 		}
+		userAdder.join();
 		if (!this->audioUUIDMap.at(recvData.user.uuid)) continue;
 		this->audioUUIDMap.at(recvData.user.uuid).setVolume(1);
 		this->audioUUIDMap.at(recvData.user.uuid).playOneShot();
-		userAdder.join();
+		
 	}
 }
 

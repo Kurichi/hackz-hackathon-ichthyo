@@ -36,6 +36,10 @@ public:
 		circle = Circle(0, 0, radius).movedBy(center);
 	}
 
+	void setName(const String& name) {
+		this->name = name;
+	}
+
 	// 描画
 	void draw() const
 	{
