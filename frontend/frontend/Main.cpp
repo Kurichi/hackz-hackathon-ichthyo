@@ -46,7 +46,7 @@ using namespace boost::asio;
 //#include "RoomlistScene.h"// 部屋一覧シーン
 #include "UI/RoomScene.h"// 部屋シーン(ここで通話する)
 
-JudgeVoice jv(L_AVE_AMP);
+JudgeVoice jv(AVE_AMP);
 
 void Main()
 {
@@ -92,6 +92,10 @@ void Main()
 	while (System::Update())
 	{
 		recorder.SendAudioData();
+		if (Key1.down()) jv.SetType(AVE_AMP);
+		if (Key2.down()) jv.SetType(L_AVE_AMP);
+		if (Key3.down()) jv.SetType(PITCH);
+		if (Key4.down()) jv.SetType(L_PITCH);
 		if (!manager.update())
 		{
 			break;

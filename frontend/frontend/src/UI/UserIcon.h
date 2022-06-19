@@ -2,6 +2,7 @@
 #include <Siv3D.hpp>
 
 extern JudgeVoice jv;
+extern bool mic_mute;
 
 // ユーザーのアイコン等
 
@@ -45,8 +46,9 @@ public:
 		font(name).draw(Arg::center = center.movedBy(0, radius + 30), Palette::Black);
 		circle.stretched(5).drawArc(0, Math::Pi * 2 * volume, 0, 10, ColorF(1.0, 1.0 - volume, 1.0 - volume));
 		bool a = (volume < 1.0);
-		if ((jv.GetType() & L_AVE_AMP & L_PITCH) == 0) a = !a;
-		if (a) {
+		if (((jv.GetType() & L_AVE_AMP) == 0) && ((jv.GetType() & L_PITCH) == 0)) a = !a;
+		Print << a;
+		if (!a || !mic_mute) {
 			circle.draw(ColorF(0.0, 0.7));
 		}
 	}
