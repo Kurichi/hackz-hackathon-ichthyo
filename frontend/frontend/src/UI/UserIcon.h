@@ -6,7 +6,7 @@
 class UserIcon {
 private:
 	int32 userID = 0;
-	String src = U"example/siv3d-kun.png";
+	ColorF color = ColorF(1.0);
 	String name = U"名無し";
 	Texture img;
 	int32 radius = 80;
@@ -20,10 +20,10 @@ public:
 	const static int32 height = 250;
 
 	// コンストラクタ
-	UserIcon(const int32& userID, const String& src, const String& name)
-		: userID(userID), src(src), name(name)
+	UserIcon(const int32& userID, const ColorF color, const String& name)
+		: userID(userID), color(color), name(name)
 	{
-		img = Texture(src, TextureDesc::Mipped);
+		img = Texture(color);
 	}
 
 	// volumeの更新

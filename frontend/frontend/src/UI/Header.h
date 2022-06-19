@@ -16,6 +16,7 @@ private:
 	ColorF bgColor = ColorF(0.3, 0.1, 1.0);
 	Circle circle = Circle(0, 0, radius).movedBy(height / 2, height / 2);
 	Font font = Font(30);
+	RectF namearea;
 public:
 
 	// コンストラクタ
@@ -38,6 +39,15 @@ public:
 		// アイコンの設定
 		microphone.update(sIn);
 		headphone.update(sOut);
+
+		// 名前表示部分のRect
+		namearea = font(name).region(
+			Arg::leftCenter = Point(height * 3 + 10, height / 2)
+		);
+	}
+
+	bool nameLeftClicked() {
+		return namearea.leftClicked();
 	}
 
 	bool update_sIn () {

@@ -72,7 +72,7 @@ public:
 		}
 
 		// 名前クリック時にnsm表示．
-		//nsm.update()
+		nsm.update(header.nameLeftClicked());
 
 		// sIn, sOutの更新
 		if (header.update_sIn()) getData().sIn ^= 1;
@@ -84,8 +84,9 @@ public:
 
 	void draw() const override
 	{
+		std::shared_ptr<Array<User>> userArray = Singletonnantoka::Get();
 		// ユーザアイコンの描画
-		for (auto i : step(usericons.size())) {
+		for (auto i : step(userArray->size())) {
 			usericons[i].draw();
 		}
 
