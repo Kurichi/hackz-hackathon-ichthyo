@@ -5,6 +5,7 @@
 #include "Core/User.h"
 #include "Core/Audio/Recorder.h"
 #include "Core/Connection/SingletonSocket.h"
+#include "Core/JudgeVoice.hpp"
 
 class UserVoiceRecorder {
 private:

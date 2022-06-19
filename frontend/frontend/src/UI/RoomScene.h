@@ -7,6 +7,8 @@
 #include "Core/Audio/SingletonMicrophone.h"
 #include "Core/JudgeVoice.hpp"
 
+extern JudgeVoice jv;
+
 extern User me;
 
 // 部屋シーン(ここで通話する)
@@ -20,7 +22,6 @@ private:
 	int32 w;
 	int32 scrollY = 0;
 	std::shared_ptr<s3d::Microphone> mic;
-	JudgeVoice jv;
 	FFTResult fft;
 
 public:
