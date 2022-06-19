@@ -7,6 +7,8 @@
 #include "Core/Audio/SingletonMicrophone.h"
 #include "Core/JudgeVoice.hpp"
 
+extern User me;
+
 // 部屋シーン(ここで通話する)
 class Room : public MyApp::Scene
 {
@@ -26,20 +28,11 @@ public:
 	// コンストラクタ
 	Room(const InitData& init) : IScene(init)
 	{
-		// ここでユーザ情報を読み込む
+		//std::shared_ptr<Array<User>> userArray = Singletonnantoka::Get();
 		// 更新があったときにも update 関数内で読み込む
-		header = Header(
-			getData().currentUserID,
-			getData().srclist[getData().currentUserID],
-			getData().namelist[getData().currentUserID]
-		);
 		usericons.clear();
 		for (auto i : step(getData().namelist.size())) {
-			usericons << UserIcon(
-				i,
-				getData().srclist[i],
-				getData().namelist[i]
-			);
+			usericons << UserIcon();
 		}
 
 		// マイク関連
@@ -49,6 +42,7 @@ public:
 
 	void update() override
 	{
+		
 		// ヘッダの更新
 		header.update(getData().sIn, getData().sOut);
 
@@ -84,9 +78,10 @@ public:
 
 	void draw() const override
 	{
-		std::shared_ptr<Array<User>> userArray = Singletonnantoka::Get();
+		//std::shared_ptr<Array<User>> userArray = Singletonnantoka::Get();
 		// ユーザアイコンの描画
-		for (auto i : step(userArray->size())) {
+		//for (auto i : step(userArray->size())) {
+		for (auto i : step(getData().namelist.size())) {
 			usericons[i].draw();
 		}
 

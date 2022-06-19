@@ -1,13 +1,14 @@
 ﻿#pragma once
 #include <Siv3D.hpp>
+#include "IconTemplate.h"
+
+extern User me;
 
 // ユーザーのアイコン等
-
 class UserIcon {
 private:
-	int32 userID = 0;
-	ColorF color = ColorF(1.0);
-	String name = U"名無し";
+	int32 txidx = me.iconIndex;
+	String name = Unicode::Widen(me.name);
 	Texture img;
 	int32 radius = 80;
 	Circle circle;
@@ -20,10 +21,9 @@ public:
 	const static int32 height = 250;
 
 	// コンストラクタ
-	UserIcon(const int32& userID, const ColorF color, const String& name)
-		: userID(userID), color(color), name(name)
+	UserIcon()
 	{
-		img = Texture(color);
+		img = IconTemplate::textures[txidx];
 	}
 
 	// volumeの更新
